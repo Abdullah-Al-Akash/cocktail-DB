@@ -1,0 +1,5 @@
+.drinks:hover {
+        cursor: pointer;
+        color: orangered;
+        border: 2px solid orangered
+}
