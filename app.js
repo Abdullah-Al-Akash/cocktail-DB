@@ -1,5 +1,8 @@
 const drinksContainer = document.getElementById('drinks-container');
 const errorMsg = document.getElementById('error-msg');
+const searchSection = document.getElementById('search-section');
+const singleDrinkItem = document.getElementById('single-drink');
+
 // Search Field:
 document.getElementById('search-btn').addEventListener('click', function () {
         drinksContainer.textContent = '';
@@ -34,6 +37,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
 
 // Show Drinks Item:
 function showDrinks(drinks) {
+        singleDrinkItem.textContent = '';
         // console.log(drinks)
         if (!drinks) {
                 const div = document.createElement('div');
@@ -72,4 +76,24 @@ const singleDrink = (drink) => {
 // Show Single Drink Details:
 const showSingleDrink = (drink) => {
         console.log(drink);
+        singleDrinkItem.textContent = '';
+        const div = document.createElement('div');
+        div.innerHTML = `
+        <div class="card mx-auto mt-5 border border-success border-3" style="width: 18rem;">
+                <img src="${drink.strDrinkThumb}" class="card-img-top" alt="...">
+                <div class="card-body">
+                        <h5 class="card-title">${drink.strDrink}</h5>
+                        <p class="card-text">${drink.strInstructions}</p>
+                </div>
+                <h5 class="text-center text-danger">Ingredients</h5>
+                <ul class="list-group list-group-flush">
+                        <li class="list-group-item">1. ${drink.strIngredient1}</li>
+                        <li class="list-group-item">2. ${drink.strIngredient2}</li>
+                        <li class="list-group-item">3. ${drink.strIngredient3}</li>
+                        <li class="list-group-item">4. ${drink.strIngredient4}</li>
+                </ul>
+        </div>
+        `;
+        singleDrinkItem.appendChild(div);
+        window.scrollTo(0, 40);
 }
