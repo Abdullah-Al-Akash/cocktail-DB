@@ -3,8 +3,38 @@ const errorMsg = document.getElementById('error-msg');
 const searchSection = document.getElementById('search-section');
 const singleDrinkItem = document.getElementById('single-drink');
 
+// Load Default items:
+function loadDefaultItems() {
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`)
+                .then(res => res.json())
+                .then(data => showDefaultItem(data.drinks))
+}
+loadDefaultItems()
+// Show Default Items:
+const showDefaultItem = (drinks) => {
+        // console.log(drinks);
+        for (let i = 0; i < 12; i++) {
+                console.log(drinks[i]);
+                const div = document.createElement('div');
+                div.innerHTML = `
+                                <div onclick=singleDrink('${drinks[i].idDrink}') class="col">
+                                        <div class="card drinks">
+                                                <img src="${drinks[i].strDrinkThumb}" class="img-fluid p-4 rounded-3" alt="...">
+                                                <div class="card-body">
+                                                        <h5 class="card-title">${drinks[i].strDrink}</h5>
+                                                        <p class="card-text"></p>
+                                                </div>
+                                        </div>
+                                </div>
+                                `;
+                drinksContainer.appendChild(div);
+
+        }
+}
+
 // Search Field:
 document.getElementById('search-btn').addEventListener('click', function () {
+        singleDrinkItem.textContent = '';
         drinksContainer.textContent = '';
         errorMsg.textContent = '';
         const searchField = document.getElementById('search-field');
@@ -14,7 +44,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
         if (searchText.length == 0) {
                 const div = document.createElement('div');
                 div.innerHTML = `
-                        <h4 class="text-danger text-center">Please write drinks name..</h4>
+                        <h4 class="text-danger text-center">Please write drinks name...</h4>
                 `;
                 errorMsg.appendChild(div);
         }
@@ -37,8 +67,6 @@ document.getElementById('search-btn').addEventListener('click', function () {
 
 // Show Drinks Item:
 function showDrinks(drinks) {
-        singleDrinkItem.textContent = '';
-        // console.log(drinks)
         if (!drinks) {
                 const div = document.createElement('div');
                 div.innerHTML = `
