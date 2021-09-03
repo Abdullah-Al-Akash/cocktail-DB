@@ -2,6 +2,7 @@ const drinksContainer = document.getElementById('drinks-container');
 const errorMsg = document.getElementById('error-msg');
 const searchSection = document.getElementById('search-section');
 const singleDrinkItem = document.getElementById('single-drink');
+const footer = document.getElementById('footer');
 
 // Load Default items:
 function loadDefaultItems() {
