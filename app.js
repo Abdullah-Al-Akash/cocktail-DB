@@ -9,6 +9,7 @@ function loadDefaultItems() {
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`)
                 .then(res => res.json())
                 .then(data => showDefaultItem(data.drinks))
+        footer.style.marginTop = '320px';
 }
 loadDefaultItems()
 // Show Default Items:
@@ -29,7 +30,7 @@ const showDefaultItem = (drinks) => {
                                 </div>
                                 `;
                 drinksContainer.appendChild(div);
-
+                footer.style.marginTop = 0;
         }
 }
 
@@ -48,6 +49,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
                         <h4 class="text-danger text-center">Please write drinks name...</h4>
                 `;
                 errorMsg.appendChild(div);
+                footer.style.marginTop = '320px';
         }
 
         // Fetch URL:
@@ -56,12 +58,14 @@ document.getElementById('search-btn').addEventListener('click', function () {
                 fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchText}`)
                         .then(res => res.json())
                         .then(data => showDrinks(data.drinks));
+                footer.style.marginTop = '320px';
         }
         else {
                 // Load Drinks Item
                 fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`)
                         .then(res => res.json())
                         .then(data => showDrinks(data.drinks));
+                footer.style.marginTop = '320px';
         }
         searchField.value = '';
 })
@@ -74,13 +78,14 @@ function showDrinks(drinks) {
                         <h4 class="text-danger text-center">There are no drinks...</h4>
                 `;
                 errorMsg.appendChild(div);
+
         }
 
         else {
                 drinks?.forEach(drink => {
                         const div = document.createElement('div');
                         div.innerHTML = `
-                                <div onclick=singleDrink('${drink.idDrink}') class="col">
+                                <div onclick=singleDrink('${drink.idDrink}') class="col mx-auto">
                                         <div class="card drinks">
                                                 <img src="${drink.strDrinkThumb}" class="img-fluid p-4 rounded-3" alt="...">
                                                 <div class="card-body">
@@ -92,6 +97,7 @@ function showDrinks(drinks) {
                                 `;
                         drinksContainer.appendChild(div);
                 })
+                footer.style.marginTop = '0px';
         }
 
 }
@@ -108,8 +114,8 @@ const showSingleDrink = (drink) => {
         singleDrinkItem.textContent = '';
         const div = document.createElement('div');
         div.innerHTML = `
-        <div class="card mx-auto mt-5 border border-success border-3" style="width: 18rem;">
-                <img src="${drink.strDrinkThumb}" class="card-img-top" alt="...">
+        <div class="card mx-auto mt-5 border border-success border-3" style="width: 20rem;">
+                <img src="${drink.strDrinkThumb}" class="card-img-top p-1" alt="...">
                 <div class="card-body">
                         <h5 class="card-title">${drink.strDrink}</h5>
                         <p class="card-text">${drink.strInstructions}</p>
