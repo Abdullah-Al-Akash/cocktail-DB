@@ -3,7 +3,12 @@ const errorMsg = document.getElementById('error-msg');
 const searchSection = document.getElementById('search-section');
 const singleDrinkItem = document.getElementById('single-drink');
 const footer = document.getElementById('footer');
+const toggleSpin = document.getElementById('spinner');
 
+const loadSpinner = (displaySpinner) => {
+        toggleSpin.style.display = displaySpinner;
+}
+loadSpinner('block');
 // Load Default items:
 function loadDefaultItems() {
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`)
@@ -32,10 +37,12 @@ const showDefaultItem = (drinks) => {
                 drinksContainer.appendChild(div);
                 footer.style.marginTop = 0;
         }
+        loadSpinner('none');
 }
 
 // Search Field:
 document.getElementById('search-btn').addEventListener('click', function () {
+        loadSpinner('block');
         singleDrinkItem.textContent = '';
         drinksContainer.textContent = '';
         errorMsg.textContent = '';
@@ -50,6 +57,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
                 `;
                 errorMsg.appendChild(div);
                 footer.style.marginTop = '320px';
+                loadSpinner('none');
         }
 
         // Fetch URL:
@@ -59,6 +67,7 @@ document.getElementById('search-btn').addEventListener('click', function () {
                         .then(res => res.json())
                         .then(data => showDrinks(data.drinks));
                 footer.style.marginTop = '320px';
+
         }
         else {
                 // Load Drinks Item
@@ -99,10 +108,12 @@ function showDrinks(drinks) {
                 })
                 footer.style.marginTop = '0px';
         }
+        loadSpinner('none');
 
 }
 // Load Single Drink By ID:
 const singleDrink = (drink) => {
+        loadSpinner('block');
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink}`)
                 .then(res => res.json())
                 .then(data => showSingleDrink(data.drinks[0]))
@@ -131,4 +142,9 @@ const showSingleDrink = (drink) => {
         `;
         singleDrinkItem.appendChild(div);
         window.scrollTo(0, 40);
+        loadSpinner('none');
+}
+
+const reload = () => {
+        window.location.reload(true);
 }
